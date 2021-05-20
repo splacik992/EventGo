@@ -2,6 +2,7 @@ package com.pali.eventgo.entity;
 
 import javax.persistence.*;
 
+@Entity
 public class Localization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
