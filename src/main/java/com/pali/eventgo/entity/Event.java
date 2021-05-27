@@ -32,9 +32,11 @@ public class Event {
     @ManyToOne()
     private Category categories;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    private Localization localization;
-//
+    private int quantityOfMembers;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Localization localization;
+
 //    @ManyToOne
 //    private User user;
 
@@ -78,6 +80,14 @@ public class Event {
         result = 31 * result + (updatedOn != null ? updatedOn.hashCode() : 0);
         result = 31 * result + (categories != null ? categories.hashCode() : 0);
         return result;
+    }
+
+    public int getQuantityOfMembers() {
+        return quantityOfMembers;
+    }
+
+    public void setQuantityOfMembers(int quantityOfMembers) {
+        this.quantityOfMembers = quantityOfMembers;
     }
 
     public Long getId() {

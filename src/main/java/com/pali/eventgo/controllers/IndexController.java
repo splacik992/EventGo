@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.format.DateTimeFormatter;
 
 @Controller
-@RequestMapping("/api/v1")
+@RequestMapping(value = "/api/v1")
 public class IndexController {
 
     private final EventRepository eventRepository;
@@ -21,19 +21,13 @@ public class IndexController {
         this.eventRepository = eventRepository;
         this.categoryRepository = categoryRepository;
     }
-
-    @GetMapping("/home/1")
-    public String getHomePage2(){
-        return "home/home.jsp";
-    }
-
-    @GetMapping("home")
+    @GetMapping(value = "/home")
     public String getHomePage(Model model, Event event) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         model.addAttribute("event", event);
         model.addAttribute("dateFormatter ", formatter);
         model.addAttribute("events", eventRepository.findAll());
         model.addAttribute("categories", categoryRepository.findAll());
-        return "home/home.jsp";
+        return "home/home";
     }
 }
