@@ -34,6 +34,10 @@ public class Event {
 
     private int quantityOfMembers;
 
+    private LocalDateTime eventStart;
+
+    private LocalDateTime durationOfTheEvent;
+
     @ManyToOne(cascade = CascadeType.ALL)
     private Localization localization;
 
@@ -61,13 +65,18 @@ public class Event {
 
         Event event = (Event) o;
 
+        if (quantityOfMembers != event.quantityOfMembers) return false;
         if (id != null ? !id.equals(event.id) : event.id != null) return false;
         if (name != null ? !name.equals(event.name) : event.name != null) return false;
         if (description != null ? !description.equals(event.description) : event.description != null) return false;
         if (eventDate != null ? !eventDate.equals(event.eventDate) : event.eventDate != null) return false;
         if (createdOn != null ? !createdOn.equals(event.createdOn) : event.createdOn != null) return false;
         if (updatedOn != null ? !updatedOn.equals(event.updatedOn) : event.updatedOn != null) return false;
-        return categories != null ? categories.equals(event.categories) : event.categories == null;
+        if (categories != null ? !categories.equals(event.categories) : event.categories != null) return false;
+        if (eventStart != null ? !eventStart.equals(event.eventStart) : event.eventStart != null) return false;
+        if (durationOfTheEvent != null ? !durationOfTheEvent.equals(event.durationOfTheEvent) : event.durationOfTheEvent != null)
+            return false;
+        return localization != null ? localization.equals(event.localization) : event.localization == null;
     }
 
     @Override
@@ -79,6 +88,10 @@ public class Event {
         result = 31 * result + (createdOn != null ? createdOn.hashCode() : 0);
         result = 31 * result + (updatedOn != null ? updatedOn.hashCode() : 0);
         result = 31 * result + (categories != null ? categories.hashCode() : 0);
+        result = 31 * result + quantityOfMembers;
+        result = 31 * result + (eventStart != null ? eventStart.hashCode() : 0);
+        result = 31 * result + (durationOfTheEvent != null ? durationOfTheEvent.hashCode() : 0);
+        result = 31 * result + (localization != null ? localization.hashCode() : 0);
         return result;
     }
 
@@ -146,4 +159,28 @@ public class Event {
         this.categories = categories;
     }
 
+
+    public LocalDateTime getEventStart() {
+        return eventStart;
+    }
+
+    public void setEventStart(LocalDateTime eventStart) {
+        this.eventStart = eventStart;
+    }
+
+    public LocalDateTime getDurationOfTheEvent() {
+        return durationOfTheEvent;
+    }
+
+    public void setDurationOfTheEvent(LocalDateTime durationOfTheEvent) {
+        this.durationOfTheEvent = durationOfTheEvent;
+    }
+
+    public Localization getLocalization() {
+        return localization;
+    }
+
+    public void setLocalization(Localization localization) {
+        this.localization = localization;
+    }
 }
