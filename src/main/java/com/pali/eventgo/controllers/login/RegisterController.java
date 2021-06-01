@@ -41,6 +41,6 @@ public class RegisterController {
             return "register";
         }
 
-        return "redirect:/api/v1/home";
+        return "redirect:/";
     }
 }

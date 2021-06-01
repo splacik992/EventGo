@@ -41,8 +41,8 @@ public class Event {
     @ManyToOne(cascade = CascadeType.ALL)
     private Localization localization;
 
-//    @ManyToOne
-//    private User user;
+    @ManyToOne
+    private AppUser user;
 
     @PrePersist
     public void prePersist() {
@@ -93,6 +93,14 @@ public class Event {
         result = 31 * result + (durationOfTheEvent != null ? durationOfTheEvent.hashCode() : 0);
         result = 31 * result + (localization != null ? localization.hashCode() : 0);
         return result;
+    }
+
+    public AppUser getUser() {
+        return user;
+    }
+
+    public void setUser(AppUser user) {
+        this.user = user;
     }
 
     public int getQuantityOfMembers() {

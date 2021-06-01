@@ -19,6 +19,6 @@ public class LoginController {
     public String approveLogin(HttpServletRequest request){
         HttpSession httpSession = request.getSession();
         httpSession.setAttribute("user", httpSession.getId());
-        return "redirect:/api/v1/home";
+        return "/";
     }
 }
