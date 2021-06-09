@@ -4,20 +4,27 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Event {
+
+    private final static String LENGTH_MESSAGE = "Musi mieć przynajmniej 5 znaków!";
+    private final static String BLANK_FIELD_MESSAGE = "Pole nie może być puste!";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Length(min = 5, max = 100, message = "Musi mieć min 5 znaków!")
+    @NotEmpty(message = BLANK_FIELD_MESSAGE)
+    @Length(min = 5, max = 100, message = LENGTH_MESSAGE)
     private String name;
 
-    @Length(min = 5, max = 600, message = "musi mieć min 5 znaków!")
+    @NotEmpty(message = BLANK_FIELD_MESSAGE)
+    @Length(min = 5, max = 600, message = LENGTH_MESSAGE)
     private String description;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

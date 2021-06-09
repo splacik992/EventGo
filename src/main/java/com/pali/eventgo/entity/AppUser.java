@@ -1,36 +1,50 @@
 package com.pali.eventgo.entity;
 
 
-import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import java.util.Collection;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 import java.util.Set;
 
 @Entity
 public class AppUser {
 
+    private final static String WHITE_SPACES_MESSAGE = "Usuń spację!";
+    private final static String BLANK_FIELD_MESSAGE = "Pole nie może być puste!";
+    private final static String NUMBER_FORMAT_MESSAGE = "Wpisz same cyfry!";
+    private final static String EMAIL_FORMAT_MESSAGE = "Wpisz prawidłowy email";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, unique = true, length = 60)
-    @NotEmpty(message = "Pole nie może być puste!")
+    @NotEmpty(message = BLANK_FIELD_MESSAGE)
     private String username;
 
-    @NotEmpty(message = "Pole nie może być puste!")
+    @NotEmpty(message = BLANK_FIELD_MESSAGE)
     private String password;
 
     @Column(unique = true)
+    @NotEmpty(message = BLANK_FIELD_MESSAGE)
+//    @Pattern(regexp = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$"
+//            ,message = EMAIL_FORMAT_MESSAGE)
     private String email;
 
     @Column(length = 50)
+    @NotEmpty(message = BLANK_FIELD_MESSAGE)
+    @Pattern(regexp = ".*\\S+.*", message = WHITE_SPACES_MESSAGE)
     private String firstName;
+
     @Column(length = 50)
+    @NotEmpty(message = BLANK_FIELD_MESSAGE)
+    @Pattern(regexp = ".*\\S+.*", message = WHITE_SPACES_MESSAGE)
     private String lastName;
 
     @Column(name = "phone")
+    @Pattern(regexp="^(0|[1-9][0-9]*)$" , message = NUMBER_FORMAT_MESSAGE)
+    @Pattern(regexp = ".*\\S+.*", message = WHITE_SPACES_MESSAGE)
+    @NotEmpty(message = BLANK_FIELD_MESSAGE)
     private String telNumber;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -42,9 +56,6 @@ public class AppUser {
     private int accountEnabled;
 
     public AppUser() {
-    }
-
-    public AppUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
     }
 
     public String getLastName() {
@@ -76,7 +87,7 @@ public class AppUser {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username.trim();
     }
 
     public Set<Role> getRoles() {
