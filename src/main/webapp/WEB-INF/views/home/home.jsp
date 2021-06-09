@@ -123,56 +123,56 @@
             </li>
             <div class="form-popup" id="myForm">
                 <table class="table">
-                    <form action="/event" class="form-container" method="post">
-                        <h2>Nowe wydarzenie</h2>
-                        <tr>
-                            <form:form method="post" modelAttribute="event">
-                            <td>
-                                <label>
-                                    Nazwa Wydarzenia: <form:input path="name"/>
-                                </label>
-                                <br>
-                                <label>
-                                    Miejsce Wydarzenia: <form:input path="localization.name"/>
-                                </label>
-                                <br>
-                                <label>
-                                    Adress: <form:input path="localization.adress"/>
-                                </label>
-                                <br><label>
-                                Miasto: <form:input path="localization.city"/>
+                    <h2>Nowe wydarzenie</h2>
+                    <tr>
+                        <form:form method="post" modelAttribute="event" action="/event">
+                        <td>
+                            <label>
+                                Nazwa Wydarzenia: <form:input path="name"/>
+                                <form:errors path="name" cssClass="error"/>
                             </label>
-                                <br>
-                                <label>
-                                    Kategoria: <form:select path="categories" items="${categ}" multiple="false"
-                                                            itemLabel="name"
-                                                            itemValue="id"/>
-                                </label>
-                                <br>
-                                <label>
-                                    Data wydarzenia: <input type="date" name="eventDate" id="datepicker"/>
-                                </label>
-                                <br>
-                                <label>
-                                    Opis:
-                                    <form:textarea path="description" cssClass="description"/>
-                                </label>
-                            </td>
-                        </tr>
+                            <br>
+                            <label>
+                                Miejsce Wydarzenia: <form:input path="localization.name"/>
+                                <form:errors path="localization.name" cssClass="error"/>
+                            </label>
+                            <br>
+                            <label>
+                                Adress: <form:input path="localization.adress"/>
+                                <form:errors path="localization.adress" cssClass="error"/>
+                            </label>
+                            <br><label>
+                            Miasto: <form:input path="localization.city"/>
+                            <form:errors path="localization.city" cssClass="error"/>
+                        </label>
+                            <br>
+                            <label>
+                                Kategoria: <form:select path="categories" items="${categ}" multiple="false"
+                                                        itemLabel="name"
+                                                        itemValue="id"/>
+                            </label>
+                            <br>
+                            <label>
+                                Data wydarzenia: <input type="date" name="eventDate" id="datepicker"/>
+                                <form:errors path="eventDate" cssClass="error" />
+                            </label>
+                            <br>
+                            <label>
+                                Opis:
+                                <form:textarea path="description" cssClass="description"/>
+                            </label>
+                        </td>
+                    </tr>
 
-                        </form:form>
+
                 </table>
-                <form action="/event" method="post">
-                <button type="submit" class="btn btn-outline-primary">Utwórz</button>
-                </form>
-                <button type="button" class="btn btn-outline-primary" onclick="function closeForm() {
+                <form:button type="submit" class="btn btn-outline-primary">Utwórz</form:button>
+                <form:button type="button" class="btn btn-outline-primary" onclick="function closeForm() {
                document.getElementById('myForm').style.display = 'none';
             }
             closeForm()">Zamknij
-                </button>
-                </form>
-            </div>
-            <hr class="sidebar-divider d-none d-md-block">
+                </form:button>
+                </form:form>
         </ul>
         <hr class="sidebar-divider d-none d-md-block">
         </sec:authorize>
@@ -211,7 +211,7 @@
                     <%--        <!-- Sidebar Widgets Column -->--%>
                     <div class="col-md-4">
                         <!-- Search Widget -->
-                        <form:form method="post" modelAttribute="event">
+                        <form:form action="/event" method="post" modelAttribute="event">
                             <div class="card my-4">
                                 <h5 class="card-header">Wyszukaj po nazwie..</h5>
                                 <div class="card-body">

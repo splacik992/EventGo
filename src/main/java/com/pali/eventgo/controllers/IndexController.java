@@ -13,10 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +21,8 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/")
-public class IndexController {
+public class
+IndexController {
 
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
@@ -48,19 +46,19 @@ public class IndexController {
         return "home/home";
     }
 
-    @GetMapping("event")
+    @RequestMapping(value = "event",method = RequestMethod.GET)
     public void getModelViewOfNewEvent(Model model) {
-        model.addAttribute("event", new Event());
+        model.addAttribute("newEvent", new Event());
     }
 
-    @PostMapping("event")
-    public String postNewEvent(@Valid Event event, BindingResult result, Model model,
+    @RequestMapping(value = "event",method = RequestMethod.POST)
+    public String postNewEvent(@Valid Event event, BindingResult result,
                                @AuthenticationPrincipal CurrentUser currentUser) throws ResourceNotExistException, ResourceAlreadyExistException {
         if (result.hasErrors()) {
             return "/";
         }
         eventService.createNewEventByCurrentUser(event, currentUser.getUsername());
-        return "/";
+        return "redirect:/";
     }
 
     @ModelAttribute("categ")

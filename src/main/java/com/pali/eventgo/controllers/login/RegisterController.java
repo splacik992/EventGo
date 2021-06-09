@@ -21,26 +21,21 @@ public class RegisterController {
     }
 
     @GetMapping("/register")
-    public String registerForm(Model model){
+    public String registerForm(Model model) {
         model.addAttribute("user", new AppUser());
         return "register";
     }
 
     @PostMapping("/register")
-    public String confirmRegisterForm(@Valid AppUser user, BindingResult result, Model model){
+    public String confirmRegisterForm(@Valid AppUser user, BindingResult result, Model model) {
 
-        if(result.hasErrors()){
-            return "register";
-        }
         AppUser user1 = userService.findByUserName(user.getUsername());
-        if(user1==null){
+        if (user1 == null) {
             userService.saveUser(user);
-        }else {
-            String error = "Użytkownik już istnieje!";
-            model.addAttribute("message",error);
-            return "register";
+            if (result.hasErrors()) {
+                return "register";
+            }
         }
-
         return "redirect:/";
     }
 }

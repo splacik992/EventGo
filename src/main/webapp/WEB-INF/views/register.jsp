@@ -27,7 +27,7 @@
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                     </div>
                     <form:input path="username" class="form-control" placeholder="Nazwa Użytkownika" type="text"/>
-                    <form:errors path="username"/> ${message}
+                    <form:errors path="username"/>
                 </div> <!-- form-group// -->
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
