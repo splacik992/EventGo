@@ -21,7 +21,8 @@
 <%--            <p class="divider-text">--%>
 <%--                <span class="bg-light">OR</span>--%>
 <%--            </p>--%>
-            <form:form method="post" modelAttribute="user">
+            <form:errors path="*"/>
+            <form:form method="post" modelAttribute="user" acceptCharset="UTF-8">
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
@@ -34,24 +35,28 @@
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                     </div>
                     <form:input path="firstName" class="form-control" placeholder="Imię" type="text"/>
+                    <form:errors path="firstName"/>
                 </div> <!-- form-group// -->
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                     </div>
                     <form:input path="lastName" class="form-control" placeholder="Nazwisko" type="text"/>
+                    <form:errors path="lastName"/>
                 </div> <!-- form-group// -->
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                     </div>
-                    <form:input path="email" class="form-control" placeholder="Email adres" type="email" />
+                    <form:input path="email" class="form-control" placeholder="Email" type="email" />
+                    <form:errors path="email"/>
                 </div> <!-- form-group// -->
                 <div class="form-group input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
                     </div>
                     <form:input path="telNumber" class="form-control" placeholder="Phone number" type="text"/>
+                    <form:errors path="telNumber"/>
                 </div> <!-- form-group// -->
 
                 <div class="form-group input-group">
@@ -77,4 +82,3 @@
 
 </div>
 <!--container end.//-->
-

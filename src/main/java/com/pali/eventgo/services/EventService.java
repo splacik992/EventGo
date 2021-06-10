@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class EventService {
 
+    private final static String NAME_TAKEN_MESSAGE = "Nazwa jest już zajęta!";
+    private final static String USER_NOT_FOUND_MESSAGE = "Użytkownik nie isnieje!";
+
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
 
@@ -21,10 +24,10 @@ public class EventService {
 
     public void createNewEventByCurrentUser(Event event, String username) throws ResourceAlreadyExistException, ResourceNotExistException {
         if (eventRepository.findByName(event.getName()) != null) {
-            throw new ResourceAlreadyExistException("Event with this name is taken");
+            throw new ResourceAlreadyExistException(NAME_TAKEN_MESSAGE);
         }
         if (userRepository.findByUsername(username) == null) {
-            throw new ResourceNotExistException("User not exist");
+            throw new ResourceNotExistException(USER_NOT_FOUND_MESSAGE);
         }
            eventRepository.save(event);
 

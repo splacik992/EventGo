@@ -21,6 +21,7 @@ public class Event {
 
     @NotEmpty(message = BLANK_FIELD_MESSAGE)
     @Length(min = 5, max = 100, message = LENGTH_MESSAGE)
+    @Column(unique = true)
     private String name;
 
     @NotEmpty(message = BLANK_FIELD_MESSAGE)

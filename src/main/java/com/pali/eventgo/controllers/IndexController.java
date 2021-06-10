@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
@@ -23,6 +24,8 @@ import java.util.List;
 @RequestMapping(value = "/")
 public class
 IndexController {
+
+    private final static String NAME_TAKEN_MESSAGE = "Nazwa jest już zajęta";
 
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
@@ -48,15 +51,18 @@ IndexController {
 
     @RequestMapping(value = "event",method = RequestMethod.GET)
     public void getModelViewOfNewEvent(Model model) {
-        model.addAttribute("newEvent", new Event());
+        model.addAttribute("event", new Event());
     }
 
     @RequestMapping(value = "event",method = RequestMethod.POST)
-    public String postNewEvent(@Valid Event event, BindingResult result,
-                               @AuthenticationPrincipal CurrentUser currentUser) throws ResourceNotExistException, ResourceAlreadyExistException {
+    public String postNewEvent(@Valid @ModelAttribute("event") Event event, BindingResult result,
+                               @AuthenticationPrincipal CurrentUser currentUser
+                              ) throws ResourceNotExistException, ResourceAlreadyExistException {
+
         if (result.hasErrors()) {
-            return "/";
+            return "/home/home";
         }
+
         eventService.createNewEventByCurrentUser(event, currentUser.getUsername());
         return "redirect:/";
     }

@@ -1,7 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page errorPage = "error.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -105,21 +107,12 @@
                     openForm()">Utwórz Wydarzenie
                 </button>
 
+                <button class="open-button">Moje wydarzenie
+                </button>
 
-                <a class="open-button" href="/user/events">
-                    <span>Moje Wydarzenia</span>
+                <a href="/event/all">
+                    <button class="open-button">Visit Google</button>
                 </a>
-                <a class="nav-link" href="/user/events/all">
-                    <span>Wszystkie Wydarzenia</span>
-                </a>
-
-                <a class="nav-link" href="/user/personal/edit">
-                    <span>Edytuj Dane</span>
-                </a>
-                <a class="nav-link" href="/user/personal/edit/password">
-                    <span>Zmień Hasło</span>
-                </a>
-
             </li>
             <div class="form-popup" id="myForm">
                 <table class="table">
@@ -130,6 +123,9 @@
                             <label>
                                 Nazwa Wydarzenia: <form:input path="name"/>
                                 <form:errors path="name" cssClass="error"/>
+                                <c:if test="${not empty event}">
+                                    <div><c:out value="${eventError}"/></div>
+                                </c:if>
                             </label>
                             <br>
                             <label>
@@ -160,6 +156,7 @@
                             <label>
                                 Opis:
                                 <form:textarea path="description" cssClass="description"/>
+                                <form:errors path="description" cssClass="error" />
                             </label>
                         </td>
                     </tr>
@@ -175,6 +172,10 @@
                 </form:form>
         </ul>
         <hr class="sidebar-divider d-none d-md-block">
+
+        <c:if test="${not empty param.error}">
+        <h>Złe dane!</h>
+        </c:if>
         </sec:authorize>
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -204,6 +205,7 @@
                                     <strong><p class="card-title"><a>${eve.localization.city} ${eve.eventDate}</a></p>
                                     </strong>
                                     Posted on ${eve.createdOn} by ${eve.user.username}
+
                                 </div>
                             </div>
                         </c:forEach>
