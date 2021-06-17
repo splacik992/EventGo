@@ -1,8 +1,6 @@
 package com.pali.eventgo.controllers;
 
 import com.pali.eventgo.entity.AppUser;
-import com.pali.eventgo.entity.Event;
-import com.pali.eventgo.entity.Localization;
 import com.pali.eventgo.repository.EventRepository;
 import com.pali.eventgo.repository.UserRepository;
 import com.pali.eventgo.services.EventService;
@@ -19,7 +17,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
@@ -42,14 +39,13 @@ class IndexControllerTest {
     @BeforeEach
     public void setup() {
         mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();  //Build MockMVC
-        eventServiceMock = new EventService(eventRepository);
+        eventServiceMock = new EventService(eventRepository, userRepository);
 
     }
 
     @Test
     void shouldReturnNewEventAfrerPostFormWithNewEvent() throws Exception {
 
-        mockMvc.perform()
     }
 
     private static AppUser getUser() {

@@ -4,11 +4,13 @@ import com.pali.eventgo.entity.AppUser;
 import com.pali.eventgo.entity.Event;
 import com.pali.eventgo.entity.Localization;
 import com.pali.eventgo.repository.EventRepository;
+import com.pali.eventgo.repository.UserRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,11 +25,13 @@ public class EventServiceTest {
     @MockBean
     private static EventRepository eventRepository;
     @MockBean
+    private UserRepository userRepository;
+    @MockBean
     private EventService eventServiceMock;
 
     @BeforeEach
     public void setup() {
-        eventServiceMock = new EventService(eventRepository);
+        eventServiceMock = new EventService(eventRepository, userRepository);
 
     }
 
