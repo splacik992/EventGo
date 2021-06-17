@@ -8,8 +8,9 @@ import com.pali.eventgo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
-@Transactional
 public class EventService {
 
     private final static String NAME_TAKEN_MESSAGE = "Nazwa jest już zajęta!";
@@ -23,15 +24,19 @@ public class EventService {
         this.userRepository = userRepository;
     }
 
-    public Event createNewEventByCurrentUser(Event event, String username) throws ResourceAlreadyExistException, ResourceNotExistException { if (eventRepository.findByName(event.getName()) != null) {
-            throw new ResourceAlreadyExistException(NAME_TAKEN_MESSAGE);
-        }
-        if (eventRepository.findByName(event.getName()) != null) {
+    @Transactional
+    public Event createNewEventByCurrentUser(Event event, String username) throws ResourceAlreadyExistException,
+            ResourceNotExistException {
+        if (eventRepository.findByName(event.getName()) == null) {
             throw new ResourceAlreadyExistException(NAME_TAKEN_MESSAGE);
         }
         if (userRepository.findByUsername(username) == null) {
             throw new ResourceNotExistException(USER_NOT_FOUND_MESSAGE);
         }
         return eventRepository.save(event);
+    }
+
+    public List<Event> getAllEvents() {
+        return eventRepository.findAllByOrderByIdDesc();
     }
 }
