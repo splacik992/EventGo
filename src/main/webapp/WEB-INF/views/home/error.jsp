@@ -15,17 +15,6 @@
     <title>Error Page</title>
 </head>
 <body>
-${pageContext.errorData.throwable.cause}
-<% if(response.getStatus() == 500){ %>
-<font color="red">Error: <%=exception.getMessage() %></font><br>
-<% if(response.getStatus() == 404){ %>
-<font color="red">Error: <%=exception.getMessage() %></font><br>
-
-<%-- include login page --%>
-<%@ include file="home.jsp"%>
-<%}else {%>
-Hi There, error code is <%=response.getStatus() %><br>
-Wróć do <a href="">STRONA GŁÓWNA</a>
-<%} %>
+Wróć do <a href="/">STRONA GŁÓWNA</a>
 </body>
 </html>

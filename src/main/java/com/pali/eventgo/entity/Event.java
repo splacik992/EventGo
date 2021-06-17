@@ -1,5 +1,6 @@
 package com.pali.eventgo.entity;
 
+import org.apache.tomcat.jni.Local;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -51,6 +52,21 @@ public class Event {
 
     @ManyToOne
     private AppUser user;
+
+    public Event(EventBuilder eventBuilder) {
+        this.id = eventBuilder.id;
+        this.categories = eventBuilder.categories;
+        this.createdOn = eventBuilder.createdOn;
+        this.description = eventBuilder.description;
+        this.durationOfTheEvent = eventBuilder.durationOfTheEvent;
+        this.eventDate = eventBuilder.eventDate;
+        this.eventStart = eventBuilder.eventStart;
+        this.name = eventBuilder.name;
+        this.user = eventBuilder.user;
+        this.localization = eventBuilder.localization;
+        this.updatedOn = eventBuilder.updatedOn;
+        this.quantityOfMembers = eventBuilder.quantityOfMembers;
+    }
 
     @PrePersist
     public void prePersist() {
@@ -131,9 +147,6 @@ public class Event {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getDescription() {
         return description;
@@ -147,33 +160,21 @@ public class Event {
         return eventDate;
     }
 
-    public void setEventDate(LocalDate eventDate) {
-        this.eventDate = eventDate;
-    }
 
     public LocalDateTime getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(LocalDateTime createdOn) {
-        this.createdOn = createdOn;
-    }
 
     public LocalDateTime getUpdatedOn() {
         return updatedOn;
     }
 
-    public void setUpdatedOn(LocalDateTime updatedOn) {
-        this.updatedOn = updatedOn;
-    }
 
     public Category getCategories() {
         return categories;
     }
 
-    public void setCategories(Category categories) {
-        this.categories = categories;
-    }
 
 
     public LocalDateTime getEventStart() {
@@ -198,5 +199,76 @@ public class Event {
 
     public void setLocalization(Localization localization) {
         this.localization = localization;
+    }
+
+    public static class EventBuilder{
+
+
+        private Long id;
+        private String name;
+        private String description;
+        private LocalDate eventDate;
+        private LocalDateTime createdOn;
+        private LocalDateTime updatedOn;
+        private Category categories;
+        private int quantityOfMembers;
+        private LocalDateTime eventStart;
+        private LocalDateTime durationOfTheEvent;
+        private Localization localization;
+        private AppUser user;
+
+        public EventBuilder buildName(String name){
+            this.name = name;
+            return this;
+        }
+
+        public EventBuilder buildId(Long id){
+            this.id = id;
+            return this;
+        }
+
+        public EventBuilder buildDescription(String description){
+            this.description = description;
+            return this;
+        }
+        public EventBuilder buildEventDate (LocalDate eventDate){
+            this.eventDate = eventDate;
+            return this;
+        }
+        public EventBuilder buildCreatedOn(LocalDateTime createdOn){
+            this.createdOn = createdOn;
+            return this;
+        }
+        public EventBuilder buildUpdatedOn(LocalDateTime updatedOn){
+            this.updatedOn = updatedOn;
+            return this;
+        }
+        public EventBuilder buildCategories(Category category){
+            this.categories = category;
+            return this;
+        }
+        public EventBuilder buildQuantityOfMembers(int quantityOfMembers){
+            this.quantityOfMembers = quantityOfMembers;
+            return this;
+        }
+        public EventBuilder buildEventStart(LocalDateTime eventStart){
+            this.eventStart = eventStart;
+            return this;
+        }
+
+        public EventBuilder buildLocalization(Localization localization){
+            this.localization = localization;
+            return this;
+        }
+
+        public EventBuilder buildDurationOfEvent(LocalDateTime durationOfTheEvent){
+            this.durationOfTheEvent = durationOfTheEvent;
+            return this;
+        }
+
+
+        public Event build(){
+            return new Event(this);
+        }
     }
 }

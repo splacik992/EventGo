@@ -2,8 +2,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page errorPage = "error.jsp" %>
+<%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -150,13 +150,13 @@
                             <br>
                             <label>
                                 Data wydarzenia: <input type="date" name="eventDate" id="datepicker"/>
-                                <form:errors path="eventDate" cssClass="error" />
+                                <form:errors path="eventDate" cssClass="error"/>
                             </label>
                             <br>
                             <label>
                                 Opis:
                                 <form:textarea path="description" cssClass="description"/>
-                                <form:errors path="description" cssClass="error" />
+                                <form:errors path="description" cssClass="error"/>
                             </label>
                         </td>
                     </tr>
@@ -197,14 +197,14 @@
                             <!-- Blog Post -->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <h2 class="card-title">${eve.name}</h2>
+                                    <h2 class="card-title">${eve.name} - ${eve.eventDate}</h2>
                                     <p class="card-text">${eve.description}</p>
                                     <a href="/event/details/${eve.id}" class="btn btn-primary">Więcej &rarr;</a>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    <strong><p class="card-title"><a>${eve.localization.city} ${eve.eventDate}</a></p>
+                                    <strong><p class="card-title"><a>${eve.localization.city}</a></p>
                                     </strong>
-                                    Posted on ${eve.createdOn} by ${eve.user.username}
+
 
                                 </div>
                             </div>
