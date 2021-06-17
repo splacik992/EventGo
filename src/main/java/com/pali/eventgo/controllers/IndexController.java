@@ -6,9 +6,7 @@ import com.pali.eventgo.entity.Event;
 import com.pali.eventgo.exceptions.ResourceAlreadyExistException;
 import com.pali.eventgo.exceptions.ResourceNotExistException;
 import com.pali.eventgo.repository.CategoryRepository;
-import com.pali.eventgo.repository.EventRepository;
 import com.pali.eventgo.services.EventService;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,14 +27,12 @@ IndexController {
 
     private final static String NAME_TAKEN_MESSAGE = "Nazwa jest już zajęta";
 
-    private final EventRepository eventRepository;
     private final CategoryRepository categoryRepository;
     private final EventService eventService;
 
-    public IndexController(EventRepository eventRepository, CategoryRepository categoryRepository, EventService eventService) {
+    public IndexController( CategoryRepository categoryRepository, EventService eventService) {
         this.categoryRepository = categoryRepository;
         this.eventService = eventService;
-        this.eventRepository = eventRepository;
     }
 
     @GetMapping
@@ -44,7 +40,7 @@ IndexController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         model.addAttribute("event", event);
         model.addAttribute("dateFormatter ", formatter);
-        model.addAttribute("events", eventRepository.findAllByOrderByIdDesc());
+        model.addAttribute("events", eventService.getAllEvents());
         model.addAttribute("categories", categoryRepository.findAll());
         return "home/home";
     }
