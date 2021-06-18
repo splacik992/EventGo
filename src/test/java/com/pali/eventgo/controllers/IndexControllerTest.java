@@ -49,9 +49,6 @@ class IndexControllerTest {
     EventService eventServiceMock;
     @MockBean
     CategoryRepository categoryRepository;
-    @Autowired
-    WebApplicationContext wac;
-
     @MockBean
     UserRepository userRepository;
 
@@ -59,15 +56,7 @@ class IndexControllerTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
-//        mockMvc = MockMvcBuilders.webAppContextSetup(wac).build();  //Build MockMVC
-//        eventServiceMock = new EventService(eventRepository,userRepository);
         indexController = new IndexController(categoryRepository,eventServiceMock);
-
-    }
-
-    @Test
-    void testMockMVC() throws Exception {
-
     }
 
     @Test
