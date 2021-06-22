@@ -12,9 +12,17 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event, Long> {
 
     Event findByName(String eventName);
+
     List<Event> findAllByOrderByIdDesc();
 
-    @Query(value = "SELECT * FROM event where id = :eventId", nativeQuery = true)
+    @Query(value = "SELECT * FROM event where id =:eventId", nativeQuery = true)
     Event findEventById(@Param("eventId") Long id);
+
+    List<Event> findEventsByName(String nameOfEvent);
+
+    @Query(value = "SELECT * FROM event where id =:nameOfLocalization", nativeQuery = true)
+    Event findByLocalization(@Param("nameOfLocalization") String localizationOfEvent);
+
+    List<Event> findEventsByLocalizationName(String name);
 
 }

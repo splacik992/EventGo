@@ -200,8 +200,7 @@
                                     <a href="/event/details/${eve.id}" class="btn btn-primary">Więcej &rarr;</a>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    <strong><p class="card-title"><a>${eve.localization.city}</a></p>
-                                    </strong>
+                                    <strong><p class="card-title">Miasto:<a>${eve.localization.city} Miejsce wydarzenia : ${eve.localization.name}</a></p></strong>
 
 
                                 </div>
@@ -211,12 +210,25 @@
                     <%--        <!-- Sidebar Widgets Column -->--%>
                     <div class="col-md-4">
                         <!-- Search Widget -->
-                        <form:form action="/event" method="post" modelAttribute="event">
+                        <form:form action="/event/place" method="post" modelAttribute="event">
                             <div class="card my-4">
-                                <h5 class="card-header">Wyszukaj po nazwie..</h5>
+                                <h5 class="card-header">Szukaj po miejscu wydarzenia..</h5>
                                 <div class="card-body">
                                     <div class="input-group">
-                                        <input type="text" name="name" class="form-control" placeholder="Search for...">
+                                        <input type="text" name="eventSearchByPlace" class="form-control" placeholder="Search for...">
+                                        <span class="input-group-append">
+                        <button class="btn btn-secondary" type="submit">Go!</button>
+                      </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form:form>
+                        <form:form action="/event/name" method="post" modelAttribute="event">
+                            <div class="card my-4">
+                                <h5 class="card-header">Szukaj po nazwie wydarzenia..</h5>
+                                <div class="card-body">
+                                    <div class="input-group">
+                                        <input type="text" name="eventSearchByName" class="form-control" placeholder="Search for...">
                                         <span class="input-group-append">
                         <button class="btn btn-secondary" type="submit">Go!</button>
                       </span>

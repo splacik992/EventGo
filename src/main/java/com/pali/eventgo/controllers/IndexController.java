@@ -6,17 +6,12 @@ import com.pali.eventgo.entity.Event;
 import com.pali.eventgo.exceptions.ResourceAlreadyExistException;
 import com.pali.eventgo.exceptions.ResourceNotExistException;
 import com.pali.eventgo.repository.CategoryRepository;
-import com.pali.eventgo.repository.EventRepository;
 import com.pali.eventgo.services.EventService;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
@@ -42,10 +37,28 @@ IndexController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         model.addAttribute("event", event);
         model.addAttribute("dateFormatter ", formatter);
-        model.addAttribute("events", eventService.getAllEvents());
+        model.addAttribute("events", eventService.findAllEventsByIdDesc());
         model.addAttribute("categories", categoryRepository.findAll());
         return "home/home";
     }
+
+    @PostMapping(value = "event/place")
+    public String searchEventByName(Model model,@RequestParam String eventSearchByPlace) throws ResourceNotExistException {
+        List<Event> eventsByPlace = eventService.findEventsByPlace2(eventSearchByPlace);
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("events",eventsByPlace);
+        return "home/home";
+    }
+
+    @PostMapping(value = "event/name")
+    public String searchEventByPlace(Model model,@RequestParam String eventSearchByName) throws ResourceNotExistException {
+        List<Event> eventsByName = eventService.findEventsByName(eventSearchByName);
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("events",eventsByName);
+        return "home/home";
+    }
+
+
 
     @RequestMapping(value = "event",method = RequestMethod.GET)
     public void getModelViewOfNewEvent(Model model) {
