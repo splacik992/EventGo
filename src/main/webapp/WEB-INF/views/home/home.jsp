@@ -123,9 +123,7 @@
                             <label>
                                 Nazwa Wydarzenia: <form:input path="name"/>
                                 <form:errors path="name" cssClass="error"/>
-                                <c:if test="${not empty event}">
-                                    <div><c:out value="${eventError}"/></div>
-                                </c:if>
+
                             </label>
                             <br>
                             <label>

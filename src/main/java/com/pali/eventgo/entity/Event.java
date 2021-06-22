@@ -119,6 +119,27 @@ public class Event {
         return result;
     }
 
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEventDate(LocalDate eventDate) {
+        this.eventDate = eventDate;
+    }
+
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public void setUpdatedOn(LocalDateTime updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
+    public void setCategories(Category categories) {
+        this.categories = categories;
+    }
+
     public AppUser getUser() {
         return user;
     }
