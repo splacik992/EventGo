@@ -25,4 +25,5 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findEventsByLocalizationName(String name);
 
+    List<Event> findEventsByCategoriesNameOrderByEventDateDesc(String name);
 }

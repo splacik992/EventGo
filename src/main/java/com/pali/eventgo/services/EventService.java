@@ -9,7 +9,6 @@ import com.pali.eventgo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -66,9 +65,20 @@ public class EventService {
 
 
     public List<Event> findEventsByName(String eventSearchByName) throws ResourceNotExistException {
-        if(eventRepository.findByName(eventSearchByName) == null){
+
+        Event eventByName = eventRepository.findByName(eventSearchByName);
+        if(eventByName == null){
             throw new ResourceNotExistException(EVENT_NOT_FOUND_MESSAGE);
         }
         return eventRepository.findEventsByName(eventSearchByName);
+    }
+
+    public List<Event> findEventsByCategory(String eventSearchByCategory) throws ResourceNotExistException {
+
+        List<Event> eventsByCategoriesName = eventRepository.findEventsByCategoriesNameOrderByEventDateDesc(eventSearchByCategory);
+        if(eventsByCategoriesName == null){
+            throw new ResourceNotExistException(EVENT_NOT_FOUND_MESSAGE);
+        }
+        return eventsByCategoriesName;
     }
 }

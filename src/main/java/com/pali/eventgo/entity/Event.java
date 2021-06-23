@@ -1,6 +1,5 @@
 package com.pali.eventgo.entity;
 
-import org.apache.tomcat.jni.Local;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -8,7 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Event {

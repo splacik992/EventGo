@@ -32,7 +32,7 @@ IndexController {
         this.eventService = eventService;
     }
 
-    @GetMapping
+    @RequestMapping(method = RequestMethod.GET)
     public String getHomePage(Model model, Event event) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         model.addAttribute("event", event);
@@ -41,23 +41,36 @@ IndexController {
         model.addAttribute("categories", categoryRepository.findAll());
         return "home/home";
     }
-
-    @PostMapping(value = "event/place")
+    @RequestMapping(value = "event/place",method = RequestMethod.POST)
     public String searchEventByName(Model model,@RequestParam String eventSearchByPlace) throws ResourceNotExistException {
         List<Event> eventsByPlace = eventService.findEventsByPlace2(eventSearchByPlace);
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("events",eventsByPlace);
         return "home/home";
     }
-
-    @PostMapping(value = "event/name")
-    public String searchEventByPlace(Model model,@RequestParam String eventSearchByName) throws ResourceNotExistException {
+    @RequestMapping(value = "event/name",method = RequestMethod.POST)
+    public String searchEventsByPlace(Model model, @RequestParam String eventSearchByName) throws ResourceNotExistException {
         List<Event> eventsByName = eventService.findEventsByName(eventSearchByName);
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("events",eventsByName);
         return "home/home";
     }
 
+    @RequestMapping(value = "event/category",method = RequestMethod.POST)
+    public String sortEventsByCategory(Model model,@RequestParam String eventSearchByCategory) throws ResourceNotExistException {
+        List<Event> eventsByName = eventService.findEventsByCategory(eventSearchByCategory);
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("events",eventsByName);
+        return "home/home";
+    }
+
+    @RequestMapping(value = "event/category/{categoryName}")
+    public String searchEventsByCategory(Model model, @PathVariable String categoryName) throws ResourceNotExistException {
+        List<Event> eventsByCategoriesName = eventService.findEventsByCategory(categoryName);
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("eventsByCategory", eventsByCategoriesName);
+        return "home/home";
+    }
 
 
     @RequestMapping(value = "event",method = RequestMethod.GET)

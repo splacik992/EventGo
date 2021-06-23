@@ -2,6 +2,7 @@ package com.pali.eventgo.entity;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -11,12 +12,21 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(name = "name",unique = true)
     private String name;
 
+    @OneToMany
+    private List<Event> events;
 
     public Category() {
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     public Long getId() {
