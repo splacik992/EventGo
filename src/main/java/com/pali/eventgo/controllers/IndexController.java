@@ -19,8 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping(value = "/")
-public class
-IndexController {
+public class IndexController {
 
     private final static String NAME_TAKEN_MESSAGE = "Nazwa jest już zajęta";
 
@@ -56,19 +55,11 @@ IndexController {
         return "home/home";
     }
 
-    @RequestMapping(value = "event/category",method = RequestMethod.POST)
-    public String sortEventsByCategory(Model model,@RequestParam String eventSearchByCategory) throws ResourceNotExistException {
+    @RequestMapping(value = "event/category/{eventSearchByCategory}",method = RequestMethod.GET)
+    public String sortEventsByCategory(Model model,@PathVariable String eventSearchByCategory) throws ResourceNotExistException {
         List<Event> eventsByName = eventService.findEventsByCategory(eventSearchByCategory);
         model.addAttribute("categories", categoryRepository.findAll());
-        model.addAttribute("events",eventsByName);
-        return "home/home";
-    }
-
-    @RequestMapping(value = "event/category/{categoryName}")
-    public String searchEventsByCategory(Model model, @PathVariable String categoryName) throws ResourceNotExistException {
-        List<Event> eventsByCategoriesName = eventService.findEventsByCategory(categoryName);
-        model.addAttribute("categories", categoryRepository.findAll());
-        model.addAttribute("eventsByCategory", eventsByCategoriesName);
+        model.addAttribute("eventsByCategory",eventsByName);
         return "home/home";
     }
 

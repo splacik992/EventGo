@@ -102,6 +102,21 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.cloudinary/cloudinary-core -->
+
+            <dependency>
+                <groupId>com.cloudinary</groupId>
+                <artifactId>cloudinary-http44</artifactId>
+                <version>1.22.1</version>
+            </dependency>
+
+
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-taglib</artifactId>
+            <version>1.0.14</version>
+        </dependency>
+
     </dependencies>
 
     <build>
