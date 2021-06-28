@@ -39,8 +39,9 @@ public class UserServiceImpl implements UserService {
         AppUser appUser = userRepository.findAppUserByEmail(email);
         if (appUser == null) {
             throw new ResourceNotExistException(USER_NOT_FOUND);
-        } else
-            return userRepository.findAppUserByEmail(email);
+        }
+
+        return userRepository.findAppUserByEmail(email);
     }
 
     @Override
