@@ -55,7 +55,22 @@ public class AppUser {
 
     private int accountEnabled;
 
+    private String hashCodeToEnableAccount;
+
+
+
+
+
+
     public AppUser() {
+    }
+
+    public String getHashCodeToEnableAccount() {
+        return hashCodeToEnableAccount;
+    }
+
+    public void setHashCodeToEnableAccount(String hashCodeToEnableAccount) {
+        this.hashCodeToEnableAccount = hashCodeToEnableAccount;
     }
 
     public String getLastName() {
