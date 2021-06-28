@@ -7,11 +7,15 @@ import com.pali.eventgo.exceptions.ResourceAlreadyExistException;
 import com.pali.eventgo.exceptions.ResourceNotExistException;
 import com.pali.eventgo.repository.CategoryRepository;
 import com.pali.eventgo.services.EventService;
+import com.pali.eventgo.utils.ImageUploader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
@@ -23,10 +27,13 @@ public class IndexController {
 
     private final static String NAME_TAKEN_MESSAGE = "Nazwa jest już zajęta";
 
+    private final Logger logger = LoggerFactory.getLogger(IndexController.class);
+    private final ImageUploader imageUploader;
     private final CategoryRepository categoryRepository;
     private final EventService eventService;
 
-    public IndexController( CategoryRepository categoryRepository, EventService eventService) {
+    public IndexController(ImageUploader imageUploader, CategoryRepository categoryRepository, EventService eventService) {
+        this.imageUploader = imageUploader;
         this.categoryRepository = categoryRepository;
         this.eventService = eventService;
     }
@@ -69,17 +76,40 @@ public class IndexController {
         model.addAttribute("event", new Event());
     }
 
+
     @RequestMapping(value = "event",method = RequestMethod.POST)
     public String postNewEvent(@Valid @ModelAttribute("event") Event event, BindingResult result,
                                @AuthenticationPrincipal CurrentUser currentUser
+                               ,@RequestParam (value = "imagePath",required = false) String imagePath
                               ) throws ResourceNotExistException, ResourceAlreadyExistException {
 
         if (result.hasErrors()) {
             return "/home/home";
         }
 
-        eventService.createNewEventByCurrentUser(event, currentUser.getUsername());
+         eventService.createNewEventByCurrentUser(event, currentUser.getUsername(),imagePath);
         return "redirect:/";
+    }
+
+    @ExceptionHandler(ResourceNotExistException.class)
+    public ModelAndView handleNotFound(){
+        logger.error("Handling not found exception");
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("error");
+
+        return modelAndView;
+    }
+    @ExceptionHandler(ResourceAlreadyExistException.class)
+    public ModelAndView handleAlreadyExist(){
+        logger.error("Handling already in db exception");
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("error");
+
+        return modelAndView;
     }
 
     @ModelAttribute("categ")
