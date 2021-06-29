@@ -6,6 +6,7 @@ import com.pali.eventgo.exceptions.ResourceNotExistException;
 import com.pali.eventgo.repository.EventRepository;
 import com.pali.eventgo.repository.LocalizationRepository;
 import com.pali.eventgo.repository.UserRepository;
+import com.pali.eventgo.utils.ImageUploader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,21 +17,23 @@ public class EventService {
 
     private final static String NAME_TAKEN_MESSAGE = "Nazwa jest już zajęta!";
     private final static String USER_NOT_FOUND_MESSAGE = "Użytkownik nie isnieje!";
-    private final static String EVENT_NOT_FOUND_MESSAGE = "Event nie istnieje!";
+    private final static String EVENT_NOT_FOUND_MESSAGE = "Wydarzenie nie istnieje!";
     private final static String LOCALIZATION_NOT_FOUND_MESSAGE = "Lokalizacja o podanej nazwie nie istnieje!";
 
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final LocalizationRepository localizationRepository;
+    private final ImageUploader imageUploader;
 
-    public EventService(LocalizationRepository localizationRepository, EventRepository eventRepository, UserRepository userRepository) {
+    public EventService(LocalizationRepository localizationRepository, EventRepository eventRepository, UserRepository userRepository, ImageUploader imageUploader) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.localizationRepository = localizationRepository;
+        this.imageUploader = imageUploader;
     }
 
     @Transactional
-    public Event createNewEventByCurrentUser(Event event, String username) throws ResourceAlreadyExistException,
+    public Event createNewEventByCurrentUser(Event event, String username,String imagePath) throws ResourceAlreadyExistException,
             ResourceNotExistException {
         if (eventRepository.findByName(event.getName()) != null) {
             throw new ResourceAlreadyExistException(NAME_TAKEN_MESSAGE);
@@ -38,6 +41,7 @@ public class EventService {
         if (userRepository.findByUsername(username) == null) {
             throw new ResourceNotExistException(USER_NOT_FOUND_MESSAGE);
         }
+
         return eventRepository.save(event);
     }
 
@@ -81,4 +85,13 @@ public class EventService {
         }
         return eventsByCategoriesName;
     }
+
+//    public void addImageFilePathToCreatedEvent(Event requestedEvent, String imagePath) throws ResourceNotExistException {
+//        Event event = eventRepository.findByName(requestedEvent.getName());
+//        if(event == null){
+//            throw new ResourceNotExistException(EVENT_NOT_FOUND_MESSAGE);
+//        }else {
+//            event.setImageFilePath(imageUploader.uploadFile(imagePath));
+//        }
+//    }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final static String USER_NOT_FOUND = "User z takim email nie istnieje";
+    private final static String USER_NOT_FOUND = "Użytkownik z takim email nie istnieje";
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;

@@ -10,6 +10,7 @@ import com.pali.eventgo.services.EventService;
 import com.pali.eventgo.utils.ImageUploader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -91,23 +92,26 @@ public class IndexController {
         return "redirect:/";
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ResourceNotExistException.class)
-    public ModelAndView handleNotFound(){
+    public ModelAndView handleNotFound(Exception exception){
         logger.error("Handling not found exception");
 
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.setViewName("error");
-
+        modelAndView.addObject("exception", exception);
         return modelAndView;
     }
-    @ExceptionHandler(ResourceAlreadyExistException.class)
-    public ModelAndView handleAlreadyExist(){
-        logger.error("Handling already in db exception");
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NumberFormatException.class)
+    public ModelAndView handleAlreadyExist(Exception exception){
+        logger.error("Handling Number Format Exception");
 
         ModelAndView modelAndView = new ModelAndView();
 
         modelAndView.setViewName("error");
+        modelAndView.addObject("exception", exception);
 
         return modelAndView;
     }

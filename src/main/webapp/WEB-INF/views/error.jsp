@@ -15,7 +15,8 @@
 <header>
 
     <h1>Coś poszło nie tak!</h1>
-    <h2><span style="color: red; "> Error: <%=exception.getMessage() %><br></h2>
+    <h2><span style="color: red; "> ${pageContext.exception.message}<br></h2>
+    <p></p>
     <h4>Wróć do strony głównej</h4>
 
 

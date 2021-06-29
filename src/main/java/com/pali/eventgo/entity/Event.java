@@ -39,6 +39,8 @@ public class Event {
     @ManyToOne()
     private Category categories;
 
+    private String imageFilePath;
+
     private int quantityOfMembers;
 
     private LocalDateTime eventStart;
@@ -117,6 +119,13 @@ public class Event {
         return result;
     }
 
+    public String getImageFilePath() {
+        return imageFilePath;
+    }
+
+    public void setImageFilePath(String imageFilePath) {
+        this.imageFilePath = imageFilePath;
+    }
 
     public void setName(String name) {
         this.name = name;

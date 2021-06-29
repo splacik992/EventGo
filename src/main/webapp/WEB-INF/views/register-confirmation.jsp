@@ -15,15 +15,15 @@
 <header>
 
     <h1>Założyłeś konto!</h1>
-    <h2>Wejdź na swój email i klinknij link aby potwiedzić!</h2>
-    <h4>Wróć do strony głównej</h4>
+    <h2>Potwierdzenie konta zostało wysłane na twój email!</h2>
+
 
 
 </header>
 <body>
 
 <a href="/">
-    <button class="btn btn-outline-primary">Wróć</button>
+    <button class="btn btn-outline-primary">Strona główna</button>
 </a>
 </body>
 </html>

@@ -2,7 +2,10 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; UTF8"
+         pageEncoding="UTF-8" %>
+<%@taglib uri="http://cloudinary.com/jsp/taglib" prefix="cl" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +21,7 @@
 
     <!-- Bootstrap core CSS -->
     <script src="<c:url value="/vendor/bootstrap/js/index.js"/>"></script>
+    <script src="<c:url value="/theme/home.js"/>"></script>
     <link href="<c:url value="/vendor/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet">
     <link href="<c:url value="/theme/css/blog-home.css"/>" rel="stylesheet">
     <link href="<c:url value="/vendor/bootstrap/css/index.css"/>" rel="stylesheet">
@@ -118,7 +122,7 @@
                 <table class="table">
                     <h2>Nowe wydarzenie</h2>
                     <tr>
-                        <form:form method="post" modelAttribute="event" action="/event">
+                        <form:form method="post" modelAttribute="event" action="/event" acceptCharset="UTF-8">
                         <td>
                             <label>
                                 Nazwa Wydarzenia: <form:input path="name"/>
@@ -156,11 +160,13 @@
                                 <form:textarea path="description" cssClass="description"/>
                                 <form:errors path="description" cssClass="error"/>
                             </label>
+                            <br>
+                            <form:input type="file" path="imageFilePath" id="imagePath"/>
                         </td>
                     </tr>
 
-
                 </table>
+
                 <form:button type="submit" class="btn btn-outline-primary">Utwórz</form:button>
                 <form:button type="button" class="btn btn-outline-primary" onclick="function closeForm() {
                document.getElementById('myForm').style.display = 'none';
@@ -191,6 +197,22 @@
                         <h1 class="my-4">hmm..
                             <small>What to do today ?</small>
                         </h1>
+                        <c:forEach items="${eventsByCategory}" var="eve">
+                            <!-- Blog Post -->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                        ${eve.user.username}
+                                    <h2 class="card-title">${eve.name}</h2>
+                                    <p class="card-text">${eve.description}</p>
+                                    <a href="/event/details/${eve.id}" class="btn btn-primary">Więcej &rarr;</a>
+                                </div>
+                                <div class="card-footer text-muted">
+                                    <strong><p class="card-title">Miasto:<a>${eve.localization.city} Miejsce wydarzenia
+                                        :
+                                            ${eve.localization.name}</a></p></strong>
+                                </div>
+                            </div>
+                        </c:forEach>
                         <c:forEach items="${events}" var="eve">
                             <!-- Blog Post -->
                             <div class="card mb-4">
@@ -200,7 +222,8 @@
                                     <a href="/event/details/${eve.id}" class="btn btn-primary">Więcej &rarr;</a>
                                 </div>
                                 <div class="card-footer text-muted">
-                                    <strong><p class="card-title">Miasto:<a>${eve.localization.city} Miejsce wydarzenia : ${eve.localization.name}</a></p></strong>
+                                    <strong><p class="card-title">Miasto:<a>${eve.localization.city} Miejsce wydarzenia
+                                        : ${eve.localization.name}</a></p></strong>
 
 
                                 </div>
@@ -215,7 +238,8 @@
                                 <h5 class="card-header">Szukaj po miejscu wydarzenia..</h5>
                                 <div class="card-body">
                                     <div class="input-group">
-                                        <input type="text" name="eventSearchByPlace" class="form-control" placeholder="Search for...">
+                                        <input type="text" name="eventSearchByPlace" class="form-control"
+                                               placeholder="Miejsce...">
                                         <span class="input-group-append">
                         <button class="btn btn-secondary" type="submit">Go!</button>
                       </span>
@@ -228,7 +252,8 @@
                                 <h5 class="card-header">Szukaj po nazwie wydarzenia..</h5>
                                 <div class="card-body">
                                     <div class="input-group">
-                                        <input type="text" name="eventSearchByName" class="form-control" placeholder="Search for...">
+                                        <input type="text" name="eventSearchByName" class="form-control"
+                                               placeholder="Nazwa...">
                                         <span class="input-group-append">
                         <button class="btn btn-secondary" type="submit">Go!</button>
                       </span>
@@ -236,6 +261,8 @@
                                 </div>
                             </div>
                         </form:form>
+
+
                         <div class="card my-lg-n1">
                             <h5 class="card-header">Kategoria</h5>
                             <div class="card-body">
@@ -243,7 +270,7 @@
                                     <div class="col-lg-10">
                                         <ul class="list-unstyled mb-0">
                                             <c:forEach items="${categories}" var="cate">
-                                                • <a href="/search/category/${cate.name}">${cate.name}</a>
+                                                • <a href="/event/category/${cate.name}">${cate.name}</a>
                                             </c:forEach>
                                         </ul>
                                     </div>
@@ -253,11 +280,11 @@
                     </div>
                 </div>
                 <!-- /.row -->
-            </div>
-            <!-- /.container -->
+            </div>            <!-- /.container -->
 
             <!-- Bootstrap core JavaScript -->
             <script src="<c:url value="/vendor/jquery/jquery2/jquery.min.js"/>"></script>
+
             <script src="<c:url value="/vendor/bootstrap/js/js2/bootstrap.bundle.min.js"/>"></script>
             <script>
                 $(function () {

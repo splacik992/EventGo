@@ -1,4 +1,4 @@
-package com.pali.eventgo.controllers.error;
+package com.pali.eventgo.utils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
