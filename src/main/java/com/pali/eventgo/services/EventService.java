@@ -23,17 +23,17 @@ public class EventService {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
     private final LocalizationRepository localizationRepository;
-    private final ImageUploader imageUploader;
 
-    public EventService(LocalizationRepository localizationRepository, EventRepository eventRepository, UserRepository userRepository, ImageUploader imageUploader) {
+
+    public EventService(LocalizationRepository localizationRepository, EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.localizationRepository = localizationRepository;
-        this.imageUploader = imageUploader;
+
     }
 
     @Transactional
-    public Event createNewEventByCurrentUser(Event event, String username,String imagePath) throws ResourceAlreadyExistException,
+    public Event createNewEventByCurrentUser(Event event, String username) throws ResourceAlreadyExistException,
             ResourceNotExistException {
         if (eventRepository.findByName(event.getName()) != null) {
             throw new ResourceAlreadyExistException(NAME_TAKEN_MESSAGE);
@@ -58,14 +58,14 @@ public class EventService {
             return eventRepository.findEventById(eventId);
     }
 
-    public List<Event> findEventsByPlace2(String placeOfEvent) throws ResourceNotExistException {
-
-        if(localizationRepository.findByName(placeOfEvent) == null){
-            throw new ResourceNotExistException(EVENT_NOT_FOUND_MESSAGE);
-        }
-        return eventRepository.findEventsByLocalizationName(placeOfEvent);
-
-    }
+//    public List<Event> findEventsByPlace(String placeOfEvent) throws ResourceNotExistException {
+//
+//        if(localizationRepository.findByName(placeOfEvent) == null){
+//            throw new ResourceNotExistException(EVENT_NOT_FOUND_MESSAGE);
+//        }
+//        return eventRepository.findEventsByLocalizationName(placeOfEvent);
+//
+//    }
 
 
     public List<Event> findEventsByName(String eventSearchByName) throws ResourceNotExistException {
