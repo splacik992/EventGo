@@ -40,8 +40,6 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String confirmRegisterForm(@Valid @ModelAttribute("user") AppUser user, BindingResult result, Model model) {
-        String confirmation = "http://localhost:9090/confirm-registration/" + user.getEmail() +
-                "/" + user.getHashCodeToEnableAccount();
 
         if (result.hasErrors()) {
             return "register";
@@ -51,6 +49,9 @@ public class RegisterController {
             userService.saveUser(user);
 
             try {
+                String confirmation = "http://localhost:9090/confirm-registration/" + user.getEmail() +
+                        "/" + user.getHashCodeToEnableAccount();
+
                 emailServiceImpl.sendMail(user.getEmail(), "EventGo - Potwierdzenie rejestracji", "Aby potwierdzić rejestracje kliknij w link poniżej: \n" +
                 confirmation, true);
             } catch (MessagingException e) {
@@ -72,6 +73,6 @@ public class RegisterController {
             userByEmail.setAccountEnabled(1);
             userService.updateUser(userByEmail);
         }
-        return "register-confirmation";
+        return "email-confirmed";
     }
 }
