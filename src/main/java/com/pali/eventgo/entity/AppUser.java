@@ -57,12 +57,21 @@ public class AppUser {
 
     private String hashCodeToEnableAccount;
 
-
+    @OneToMany
+    private List<Event> events;
 
 
 
 
     public AppUser() {
+    }
+
+    public List<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     public String getHashCodeToEnableAccount() {
