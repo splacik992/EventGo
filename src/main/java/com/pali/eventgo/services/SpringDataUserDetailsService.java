@@ -24,7 +24,7 @@ public class SpringDataUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         AppUser appUser = userService.findByUserName(username);
-        if (appUser == null) {
+        if (appUser == null || appUser.getAccountEnabled() != 1) {
             throw new UsernameNotFoundException(username);
         }
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
